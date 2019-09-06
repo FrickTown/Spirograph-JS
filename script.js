@@ -3,7 +3,7 @@ var l1;
 
 function setup(){
     //Width and height of scene
-    createCanvas(500, 500);
+    createCanvas(1000, 1000);
     //Background color
     background("#263238");
     //Attempted tickrate per second
