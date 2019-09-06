@@ -178,7 +178,7 @@ var speed;
 //Scene Logic Goes Here
 function SceneSetup(){
     //Demo
-    fiveSetsOfSwirls();
+    //fiveSetsOfSwirls();
     //Alt demo (Uncomment and comment other fiveSetsOfSwirls())
-    //GrowingRWBQI();
+    GrowingRWBQI();
 }
