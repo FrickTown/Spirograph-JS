@@ -32,11 +32,15 @@ function GrowingRWBQI(){
     Root.radius = 0;
     Root.radiusUpdate = "if(this.radius < 400)this.radius += 0.1;"
     var offset = 0.0;
+    var FirstChildrenRadialUpdate = `{
+        this.radialDistanceFromParent = this.parent.radius * this.radialDistanceFromParentFactor; 
+        this.radius = this.parent.radius - this.radialDistanceFromParent;
+    }`;
     //Four evenly spaced first layer children, constant radius
-    Root.addChild(0.5, (0) + offset, "#fcf9ea", "{this.radialDistanceFromParent = this.parent.radius * this.radialDistanceFromParentFactor; this.radius = this.parent.radius - this.radialDistanceFromParent;}", "{this.radians += 0.0025}", {noTrace: true, noCircle: true});
-    Root.addChild(0.5, (Math.PI / 2) + offset, "#fcf9ea", "{this.radialDistanceFromParent = this.parent.radius * this.radialDistanceFromParentFactor; this.radius = this.parent.radius - this.radialDistanceFromParent;}", "{this.radians += 0.0025}", {noTrace: true, noCircle: true});
-    Root.addChild(0.5, (Math.PI) + offset, "#fcf9ea", "{this.radialDistanceFromParent = this.parent.radius * this.radialDistanceFromParentFactor; this.radius = this.parent.radius - this.radialDistanceFromParent;}", "{this.radians += 0.0025}", {noTrace: true, noCircle: true});
-    Root.addChild(0.5, (Math.PI * 1.5) + offset, "#fcf9ea", "{this.radialDistanceFromParent = this.parent.radius * this.radialDistanceFromParentFactor; this.radius = this.parent.radius - this.radialDistanceFromParent;}", "{this.radians += 0.0025}", {noTrace: true, noCircle: true});
+    Root.addChild(0.5, (0) + offset, "#fcf9ea", FirstChildrenRadialUpdate, "{this.radians += 0.0025}", {noTrace: true, noCircle: true});
+    Root.addChild(0.5, (Math.PI / 2) + offset, "#fcf9ea", FirstChildrenRadialUpdate, "{this.radians += 0.0025}", {noTrace: true, noCircle: true});
+    Root.addChild(0.5, (Math.PI) + offset, "#fcf9ea", FirstChildrenRadialUpdate, "{this.radians += 0.0025}", {noTrace: true, noCircle: true});
+    Root.addChild(0.5, (Math.PI * 1.5) + offset, "#fcf9ea", FirstChildrenRadialUpdate, "{this.radians += 0.0025}", {noTrace: true, noCircle: true});
 
     //Each child gets two evenly spaced cirles, dynamic radius
     Root.children[0].addChild(1.0, 0, "#5edfff", "{this.radialDistanceFromParent = (this.parent.radius * this.radialDistanceFromParentFactor) * Math.sqrt(Math.pow(sin(this.radians * 5), 2))}", "{this.radians += 0.0025}");

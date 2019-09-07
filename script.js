@@ -31,7 +31,7 @@ function setup(){
 //So a point is found by looking along a parent entity's diameter, first determining a point along the curve on which it will sit, and then scaling this by this a factor of its parents radius, sort of like its amplitute.
 //So for example, if a parent is located at [0;0], and it has a radius of 15, and its child has a constant angle of 0 radians, and a radius of 0.8 times its parents radius, this child will be located at:
 //[0 + parentRadius * cos(0 rad) * 0.8 = 15 * 0.8 = 12; 0 + parentRadius * sin(0) * 0.8 = 0 * 0.8 = 0].
-//Its child will be located at [12;0]. The childrens' positions are recursively updated every tick, so first the parent calculates its new point, then its childrens' origins will be calculated from there, and then its childrens' origins will move to their parent's new projected points, and so on.
+//Its child will be located at [12;0]. The childrens' positions are recursively updated every tick, so first the parent calculates its new point, then its childrens' origins will be calculated from there.
 
 function Entity(){
     //Top level entities will not have a parent, so default is null unless created with constructor
@@ -181,4 +181,5 @@ function SceneSetup(){
     fiveSetsOfSwirls();
     //Alt demo (Uncomment and comment other fiveSetsOfSwirls())
     //GrowingRWBQI();
+    //More demos available in savedFunctions.js
 }
