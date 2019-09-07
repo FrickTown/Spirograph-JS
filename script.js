@@ -3,23 +3,14 @@ var l1;
 
 function setup(){
     //Width and height of scene
-    createCanvas(1000, 1000);
+    createCanvas(1920, 1000);
     //Background color
     background("#263238");
     //Attempted tickrate per second
-    frameRate(144);
+    frameRate(80);
 
     //Init layer
-    l1 = createGraphics(1500, 1500);
-
-    //Create the first entity. All its children are created through the child constructor in the object. 
-    Root = new Entity();
-
-    //Set its origin to the center of the screen (width and height are already defined as the canvas dimensions by p5.js)
-    Root.origin.x = width / 2;
-    Root.origin.y = height / 2;
-    //Set a base radius
-    Root.radius = 400;
+    l1 = createGraphics(1920, 1000);
 
     //Call the function where custom drawing code is written
     SceneSetup();
@@ -156,7 +147,8 @@ function Entity(){
 
 function update(){
     //Initiate recursive update function
-    Root.update();
+    Root1.update();
+    Root2.update();
 }
 
 //Tick function
@@ -167,7 +159,8 @@ function draw(){
     noFill();
 
     //Initiate recursive drawing function
-    Root.draw();
+    Root1.draw();
+    Root2.draw();
     //Append layer 1 to canvas
     image(l1, 0, 0);
 }
@@ -177,9 +170,21 @@ var speed;
 
 //Scene Logic Goes Here
 function SceneSetup(){
-    //Demo
-    fiveSetsOfSwirls();
-    //Alt demo (Uncomment and comment other fiveSetsOfSwirls())
-    //GrowingRWBQI();
-    //More demos available in savedFunctions.js
+
+    //Create the first entity. All its children are created through the child constructor in the object. 
+    Root1 = new Entity();
+
+    //Set its origin to the center of the screen (width and height are already defined as the canvas dimensions by p5.js)
+    Root1.origin.x = width / 4;
+    Root1.origin.y = height / 2;
+    //Set a base radius
+    Root1.radius = 400;
+
+    Root2 = new Entity();
+    Root2.origin.x = width / 4 * 3;
+    Root2.origin.y = height / 2;
+    Root2.radius = 400;
+
+    TrippyMovement(Root1);
+    fiveSetsOfSwirls(Root2);
 }
