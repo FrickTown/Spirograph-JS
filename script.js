@@ -105,8 +105,8 @@ function Entity(){
 
     this.getPosition = function(){
         return {
-            x: this.parent.origin.x + ((this.radialDistanceFromParent - this.parent.lineThickness) * cos(this.radians)),
-            y: this.parent.origin.y + ((this.radialDistanceFromParent - this.parent.lineThickness) * sin(this.radians))
+            x: this.parent.origin.x + ((this.radialDistanceFromParent) * cos(this.radians)),
+            y: this.parent.origin.y + ((this.radialDistanceFromParent) * sin(this.radians))
         };
     }
 
