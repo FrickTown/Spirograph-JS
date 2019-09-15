@@ -7,7 +7,7 @@ function setup(){
     //Background color
     background("#263238");
     //Attempted tickrate per second
-    frameRate(80);
+    frameRate(120);
 
     //Init layer
     l1 = createGraphics(1920, 1000);
@@ -145,46 +145,45 @@ function Entity(){
     console.log(this);
 }
 
-function update(){
-    //Initiate recursive update function
-    Root1.update();
-    Root2.update();
-}
-
 //Tick function
 function draw(){
-    update();
     
     background("#263238");
     noFill();
+    
+    //Call recursive update and drawing function
+    root.update();
+    root.draw();
 
-    //Initiate recursive drawing function
-    Root1.draw();
-    Root2.draw();
-    //Append layer 1 to canvas
+    //Draw layer 1 on canvas
     image(l1, 0, 0);
 }
 
 //Scene global scope required variables go here
 var speed;
+var root;
 
 //Scene Logic Goes Here
 function SceneSetup(){
 
     //Create the first entity. All its children are created through the child constructor in the object. 
-    Root1 = new Entity();
+    root = new Entity();
 
     //Set its origin to the center of the screen (width and height are already defined as the canvas dimensions by p5.js)
-    Root1.origin.x = width / 4;
-    Root1.origin.y = height / 2;
+    root.origin.x = width / 2;
+    root.origin.y = height / 2;
     //Set a base radius
-    Root1.radius = 400;
+    root.radius = 400;
 
-    Root2 = new Entity();
-    Root2.origin.x = width / 4 * 3;
-    Root2.origin.y = height / 2;
-    Root2.radius = 400;
+    //Add two children, half the size of the root
+    root.addChild(0.5, 0, "#5edfff", "{}", "{this.radians += 0.0025}", {noTrace: true, noLine: true});
+    root.addChild(0.5, Math.PI, "#f73859", "{}", "{this.radians += 0.0025}", {noTrace: true, noLine: true});
 
-    TrippyMovement(Root1);
-    fiveSetsOfSwirls(Root2);
+    //Add a child to each of root's children
+    root.children[0].addChild(0.5, Math.PI, "#f73859", "{}", "{this.radians -= 0.005}", {noTrace: true, noLine: true});
+    root.children[1].addChild(0.5, 0, "#5edfff", "{}", "{this.radians -= 0.005}", {noTrace: true, noLine: true});
+
+    //Add yet another layer
+    root.children[0].children[0].addChild(0.5, 0, "#5edfff", "{}", "{this.radians += 0.01}", {noTrace: false, noLine: true});
+    root.children[1].children[0].addChild(0.5, Math.PI, "#f73859", "{}", "{this.radians += 0.01}", {noTrace: false, noLine: true});
 }
