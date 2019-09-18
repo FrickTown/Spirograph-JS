@@ -117,17 +117,14 @@ function Entity(){
         stroke(this.color);
         if(!this.options.noCircle)
             ellipse(this.origin.x, this.origin.y, this.radius*2);
-        if(this.parent != null){
+        if(!this.options.noLine && this.parent != null)
+            line(this.parent.origin.x, this.parent.origin.y, this.origin.x, this.origin.y);
 
-            if(!this.options.noLine)
-                line(this.parent.origin.x, this.parent.origin.y, this.origin.x, this.origin.y);
+        l1.strokeWeight(this.lineThickness);
+        l1.stroke(this.color);
 
-            l1.strokeWeight(this.lineThickness);
-            l1.stroke(this.color);
-
-            if(!this.options.noTrace)
+        if(!this.options.noTrace)
                 l1.point(this.origin.x, this.origin.y);
-        }
 
         //Execute function recursively
         this.children.forEach(element => {
@@ -162,20 +159,18 @@ function SceneSetup(){
     root = new Entity();
 
     //Set its origin to the center of the screen (width and height are already defined as the canvas dimensions by p5.js)
-    root.origin.x = width / 2;
+    root.origin.x = 0;
     root.origin.y = height / 2;
     //Set a base radius
-    root.radius = 400;
+    root.radius = 200;
+    root.options = {noTrace: false};
+    root.color = "#f73859";
+    root.rotationUpdate = "{this.origin.x += 1}";
 
     //Add two children, half the size of the root
-    root.addChild(0.5, 0, "#5edfff", "{}", "{this.radians += 0.0025}", {noTrace: true, noLine: true});
-    root.addChild(0.5, Math.PI, "#f73859", "{}", "{this.radians += 0.0025}", {noTrace: true, noLine: true});
+    root.addChild(0.5, 0, "#5edfff", "{}", "{this.radians = asin(sin(this.parent.origin.x / 10))} ", {noTrace: false, noLine: true});
+    //root.addChild(0.5, Math.PI, "#5edfff", "{}", "{this.radians -= Math.PI / 200}", {noTrace: false, noLine: true});
+    root.children[0].addChild(0.5, 0, "#fcf9ea", "{}", "{this.radians -= Math.PI / 200}", {noTrace: false, noLine: true});
+    //root.children[1].addChild(0.5, Math.PI, "#fcf9ea", "{}", "{this.radians += Math.PI / 200}", {noTrace: false, noLine: true});
 
-    //Add a child to each of root's children
-    root.children[0].addChild(0.5, Math.PI, "#f73859", "{}", "{this.radians -= 0.005}", {noTrace: true, noLine: true});
-    root.children[1].addChild(0.5, 0, "#5edfff", "{}", "{this.radians -= 0.005}", {noTrace: true, noLine: true});
-
-    //Add yet another layer
-    root.children[0].children[0].addChild(0.5, 0, "#5edfff", "{}", "{this.radians += 0.01}", {noTrace: false, noLine: true});
-    root.children[1].children[0].addChild(0.5, Math.PI, "#f73859", "{}", "{this.radians += 0.01}", {noTrace: false, noLine: true});
 }
